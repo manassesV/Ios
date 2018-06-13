@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KraftSales.Views.PrintOrderPage"
+             xmlns:views="clr-namespace:KraftSales.Views;assembly=KraftSales"
+             xmlns:converters="clr-namespace:KraftSales.Converters;assembly=KraftSales"
+             xmlns:triggers="clr-namespace:KraftSales.Triggers;assembly=KraftSales"
+             xmlns:behaviors="clr-namespace:KraftSales.Behaviors;assembly=KraftSales"
+			 xmlns:viewModelBase="clr-namespace:KraftSales.ViewModels.Base;assembly=KraftSales"
+			 viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String" iOS="DKP Fair" WinPhone="Kraft Fair" />
+    </ContentPage.Title>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancelar" Icon="" Command="{Binding CancelPrintOrderCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+
+        <Grid Padding="0" ColumnSpacing="0" RowSpacing="0" Margin="10, 0" BackgroundColor="{StaticResource BackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="24">
+                <Label Text="[" TextColor="{StaticResource LightBlueColor}"/>
+                <Label Text="IMPRESSÃO" FontAttributes="Bold"/>
+                <Label Text="]" TextColor="{StaticResource LightBlueColor}"/>
+            </StackLayout>
+            <Label Grid.Row="1" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="Escolha uma impressora" Margin="48,0,48,24" />
+            <ListView   Grid.Row="2"
+                        x:Name="Printers"       
+                        IsVisible="{Binding Impressoras.Count, Converter={StaticResource CountToBoolConverter}}"
+                        ItemsSource="{Binding Impressoras}"
+                        HasUnevenRows="True"
+                        SeparatorVisibility="None"
+                        CachingStrategy="RecycleElement">
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior                    
+                        EventName="ItemTapped"
+                        Command="{Binding PrintOrderCommand}"
+                        EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Margin="6,8" ColumnSpacing="0" RowSpacing="0" Padding="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding Nome}" Grid.Row="0" Grid.Column="1" TextColor="Black"  />
+                                <Label Text="{Binding Ip}" Grid.Row="1" Grid.Column="1" Margin="0,4,0,12" />
+                                
+                                <Image Grid.RowSpan="3" Source="ic_print_black_24dp.png" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="40" Margin="0,0,16,0" />
+                                <Image Grid.RowSpan="2" Grid.Column="2" Source="ic_keyboard_arrow_right_black_24dp.png" HeightRequest="18" WidthRequest="18" VerticalOptions="Center" HorizontalOptions="Center"  />
+
+                                <BoxView  HeightRequest="1" Color="#616161" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="Fill" VerticalOptions="End" />
+
+                            </Grid>
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <ActivityIndicator  Grid.RowSpan="4"
+                                Color="{StaticResource LightBlueColor}" 
+                                IsRunning="{Binding IsBusy}"
+                                IsVisible="{Binding IsBusy}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double" iOS="100" Android="100" WinPhone="400" />
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

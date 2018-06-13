@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KraftSales.Views.MainPage"
+             xmlns:xfx="clr-namespace:Xfx;assembly=Xfx.Controls"
+		 	 xmlns:viewModelBase="clr-namespace:KraftSales.ViewModels.Base;assembly=KraftSales"
+             xmlns:animations="clr-namespace:KraftSales.Animations;assembly=KraftSales"
+             xmlns:converters="clr-namespace:KraftSales.Converters;assembly=KraftSales"
+             xmlns:triggers="clr-namespace:KraftSales.Triggers;assembly=KraftSales"
+             xmlns:behaviors="clr-namespace:KraftSales.Behaviors;assembly=KraftSales"
+			 viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String" iOS="DKP Fair" WinPhone="Kraft Fair" />
+    </ContentPage.Title>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Sair" Command="{Binding LogoutCommand}" Icon="" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource BackgroundColor}" VerticalOptions="Fill" HorizontalOptions="Fill">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Image Source="background_main.jpg" Aspect="AspectFill" Grid.RowSpan="3" Grid.ColumnSpan="2" Opacity="0.25" />
+
+            <StackLayout HorizontalOptions="Center" Grid.ColumnSpan="2">
+                <Label Text="{Binding CurrentUser, StringFormat='Usuário: {0}'}" />
+            </StackLayout>
+
+            <StackLayout Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image Source="ic_person_add_black_24dp.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="48" Aspect="AspectFit"/>
+                <Label Text="Cliente Novo"  HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AddClientCommand}" NumberOfTapsRequired="1" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image Source="ic_add_shopping_cart_black_24dp" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="48" Aspect="AspectFit" />
+                <Label Text="Pedido de Vendas" HorizontalOptions="Center" HorizontalTextAlignment="Center"  />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OrderCommand}" NumberOfTapsRequired="1" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+
+            <!--<StackLayout Grid.Row="2" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image Source="ic_attach_money_black_24dp.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="48" Aspect="AspectFit" />
+                <Label Text="Aprovar Pedidos" HorizontalOptions="Center" HorizontalTextAlignment="Center"  />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ApprovalCommand}" NumberOfTapsRequired="1" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>-->
+
+            <StackLayout Grid.Row="2" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image Source="ic_sync_black_24dp.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="48" Aspect="AspectFit" />
+                <Label Text="Sincronizar Dados" HorizontalOptions="Center" HorizontalTextAlignment="Center"  />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SyncDataCommand}" NumberOfTapsRequired="1" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+
+            <ActivityIndicator  Grid.RowSpan="3" Grid.ColumnSpan="2"
+                                Color="{StaticResource LightBlueColor}" 
+                                IsRunning="{Binding IsBusy}"
+                                IsVisible="{Binding IsBusy}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double" iOS="100" Android="100" WinPhone="400" />
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+
+        </Grid>
+
+        <!--<Grid x:Name="gridMain" RowSpacing="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" x:Name="rowPlantas"/>
+                <RowDefinition Height=".3*" x:Name="rowCarousel"/>
+                <RowDefinition Height=".6*" x:Name="rowButtons"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout HorizontalOptions="Center">
+                <Label Text="{Binding CurrentUser, StringFormat='Usuário: {0}'}" />
+            </StackLayout>
+
+            <Image Source="background_main.jpg" Aspect="AspectFill" Grid.Row="1" />
+
+            <Grid x:Name="gridButtons" RowSpacing="8" ColumnSpacing="8" Grid.Row="2">
+
+                <Image x:Name="btnNewClient" Source="btn_cliente_novo.png" Aspect="AspectFill" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="0" Margin="10">
+
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AddClientCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+
+                <Image x:Name="btnOrder" Source="btn_pedido_vendas.png" Aspect="AspectFill" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="1"  Margin="10">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OrderCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+
+                <Image x:Name="btnSync" Source="btn_sincronizar.png" Aspect="AspectFill" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Row="1" Grid.Column="0"  Margin="10">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SyncDataCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+
+                -->
+        <!--<Image x:Name="btnBilled" Source="ic_sync_black_24dp.png" Aspect="AspectFill" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Row="1" Grid.Column="1"  Margin="10">
+
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBilledClicked" NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+
+                </Image>-->
+        <!--
+
+
+            </Grid>
+            
+            <ActivityIndicator  Grid.RowSpan="2"
+                                Color="{StaticResource LightBlueColor}" 
+                                IsRunning="{Binding IsBusy}"
+                                IsVisible="{Binding IsBusy}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double" iOS="100" Android="100" WinPhone="400" />
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+
+        </Grid>-->
+
+    </ContentPage.Content>
+</ContentPage>

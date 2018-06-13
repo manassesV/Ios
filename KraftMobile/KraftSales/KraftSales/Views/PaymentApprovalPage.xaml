@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KraftSales.Views.PaymentApprovalPage"
+             xmlns:views="clr-namespace:KraftSales.Views;assembly=KraftSales"
+             xmlns:converters="clr-namespace:KraftSales.Converters;assembly=KraftSales"
+             xmlns:triggers="clr-namespace:KraftSales.Triggers;assembly=KraftSales"
+             xmlns:behaviors="clr-namespace:KraftSales.Behaviors;assembly=KraftSales"
+			 xmlns:viewModelBase="clr-namespace:KraftSales.ViewModels.Base;assembly=KraftSales"
+			 viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String" iOS="DKP Fair" WinPhone="Kraft Fair" />
+    </ContentPage.Title>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+
+        <Grid Padding="0" ColumnSpacing="0" RowSpacing="0" BackgroundColor="{StaticResource BackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="48,24,48,10">
+                <Label Text="[" TextColor="{StaticResource LightBlueColor}"/>
+                <Label Text="APROVAÇÃO DO PEDIDO" FontAttributes="Bold"/>
+                <Label Text="]" TextColor="{StaticResource LightBlueColor}"/>
+            </StackLayout>
+
+            <ScrollView Grid.Row="1">
+                <StackLayout>
+
+                    <Grid Grid.Row="4" Margin="24,0,24,24" RowSpacing="0" ColumnSpacing="0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Text="Desconto(%)" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center"/>
+                        <Entry Grid.Column="1" Text="{Binding Desconto}" Keyboard="Numeric" >
+                            <!--<Entry.Style>
+                        <OnPlatform x:TypeArguments="Style" 
+                                          iOS="{StaticResource EntryStyle}"
+                                          Android="{StaticResource EntryStyle}"
+                                          WinPhone="{StaticResource UwpEntryStyle}"/>
+                    </Entry.Style>
+                    <Entry.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateDescontoCommand}" />
+                    </Entry.Behaviors>
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry" Binding="{Binding Desconto.IsValid}" Value="False">
+                            <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                        </DataTrigger>
+                    </Entry.Triggers>-->
+                        </Entry>
+
+                        <Label Grid.Row="1" Text="Pagamento" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+                        <Picker Grid.Row="1" Grid.Column="1" ItemsSource="{Binding TiposPagamento}" VerticalOptions="Fill" SelectedIndex="{Binding TipoPagamentoSelectedIndex}" />
+
+                        <Label Grid.Row="2" Text="Representante" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+                        <Picker Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Representantes}" VerticalOptions="Fill" SelectedIndex="{Binding RepresentanteSelectedIndex}" />
+
+
+                    </Grid>
+
+                    <Grid BackgroundColor="{StaticResource LightGreenColor}" Grid.Row="3" Padding="0" ColumnSpacing="0" RowSpacing="0" Margin="24,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label Text="Total" FontAttributes="Bold" HorizontalOptions="Center" FontSize="Medium" />
+                        <Label Text="{Binding TotalItens, StringFormat='{0} itens'}" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="Center" FontSize="Medium"/>
+                        <Label Text="{Binding ValorTotal, StringFormat='{0:F}'}" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="Center" FontSize="Medium"/>
+                        <Label Text="Total com desconto" FontAttributes="Bold" HorizontalOptions="Center" FontSize="Medium" Grid.Row="1" Grid.ColumnSpan="2"/>
+                        <Label Text="{Binding ValorTotalComDesconto, StringFormat='{0:F}'}" FontAttributes="Bold" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" FontSize="Medium"/>
+
+                    </Grid>
+
+                    <Grid Grid.Row="1" Padding="0" ColumnSpacing="0" RowSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Código" FontAttributes="Bold" HorizontalOptions="Center" FontSize="Medium" />
+                        <Label Text="Quantidade" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="Center" FontSize="Medium"/>
+                        <Label Text="Valor (R$)" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="Center" FontSize="Medium"/>
+                    </Grid>
+
+                    <ListView Grid.Row="2" ItemsSource="{Binding ItensPedidos}"
+                              IsVisible="{Binding ItensPedidos.Count, Converter={StaticResource CountToBoolConverter}}" 
+                              HasUnevenRows="True" 
+                              SeparatorVisibility="None" 
+                              CachingStrategy="RecycleElement" 
+                              Margin="5,0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="0" ColumnSpacing="0" RowSpacing="0" Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding CodigoProduto}" FontAttributes="Bold" HorizontalOptions="Center" FontSize="Medium" />
+                                        <Label Text="{Binding Quantidade}" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="Center" FontSize="Medium"/>
+                                        <Label Text="{Binding Valor, StringFormat='{0:F}'}" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="Center" FontSize="Medium"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </StackLayout>
+            </ScrollView>
+
+            <Button Grid.Row="2" Text="FINALIZAR" Command="{Binding FinishOrderCommand}" Margin="10" />
+
+
+            <!--BOTAO FINALIZAR-->
+            <!--<Grid BackgroundColor="{StaticResource LightBlueColor}" Grid.Row="5" Padding="0" ColumnSpacing="0" RowSpacing="0">
+                <Label Text="[ FINALIZAR ]" Style="{StaticResource LabelButtonStyle}"/>
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding FinishOrderCommand}" NumberOfTapsRequired="1" />
+                </Grid.GestureRecognizers>
+            </Grid>-->
+
+
+
+            <ActivityIndicator  Grid.RowSpan="6"
+                                Color="{StaticResource LightBlueColor}" 
+                                IsRunning="{Binding IsBusy}"
+                                IsVisible="{Binding IsBusy}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double" iOS="100" Android="100" WinPhone="400" />
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

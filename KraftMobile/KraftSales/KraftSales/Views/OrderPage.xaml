@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KraftSales.Views.OrderPage"
+             xmlns:xfx="clr-namespace:KraftSales.Controls;assembly=KraftSales"
+             xmlns:views="clr-namespace:KraftSales.Views;assembly=KraftSales"
+             xmlns:converters="clr-namespace:KraftSales.Converters;assembly=KraftSales"
+             xmlns:triggers="clr-namespace:KraftSales.Triggers;assembly=KraftSales"
+             xmlns:behaviors="clr-namespace:KraftSales.Behaviors;assembly=KraftSales"
+			 xmlns:viewModelBase="clr-namespace:KraftSales.ViewModels.Base;assembly=KraftSales"
+			 viewModelBase:ViewModelLocator.AutoWireViewModel="True">
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String" iOS="DKP Fair" WinPhone="Kraft Fair" />
+    </ContentPage.Title>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancelar" Command="{Binding CancelOrderCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+
+            <Style x:Key="EntryStyle333"
+                   TargetType="{x:Type xfx:XfxComboBox}">
+                <Setter Property="FontFamily" Value="{StaticResource MontserratRegular}" />
+                <!--<Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource BlackColor}" />-->
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <!--<Setter Property="BackgroundColor" 
+                        Value="Transparent" />-->
+                <Setter Property="BackgroundColor" Value="{ StaticResource EntryBackgroundColor }" />
+                <Setter Property="Opacity" Value="0.6" />
+                <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="True" />
+                <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource BlackColor}" />
+                <Style.Triggers>
+                    <Trigger TargetType="Entry"
+                             Property="IsFocused" 
+                             Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="TextColor" Value="{ StaticResource TextColor }" />
+                <Setter Property="PlaceholderColor" Value="{ StaticResource LightTextColor }" />
+                <!--<Setter Property="BackgroundColor" Value="{ StaticResource EntryBackgroundColor }" />-->
+                <Setter Property="MinimumHeightRequest" Value="36" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid Padding="0" ColumnSpacing="0" RowSpacing="0" BackgroundColor="{StaticResource BackgroundColor}">
+        <!--<Grid Padding="0" ColumnSpacing="0" RowSpacing="0" BackgroundColor="#cfcfcf">-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="10">
+                <Label Text="[" TextColor="{StaticResource LightBlueColor}"/>
+                <Label Text="PEDIDO DE VENDA" FontAttributes="Bold"/>
+                <Label Text="]" TextColor="{StaticResource LightBlueColor}"/>
+            </StackLayout>
+            <!--CADASTRO PEDIDO FORM-->
+            <ScrollView Grid.Row="1" Margin="0,0,0,5">
+                <StackLayout Margin="5,0,5,5" Spacing="10">
+
+                    <Frame BackgroundColor="White" HasShadow="False">
+                        <Grid RowSpacing="0" ColumnSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="Tipo Cliente" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+                            <Picker Grid.Column="1" ItemsSource="{Binding TiposCliente}" VerticalOptions="Fill" SelectedIndex="{Binding TipoClienteSelectedIndex}" IsEnabled="{Binding PodeEditarDadosCliente}"/>
+
+                            <Label Grid.Row="1" Text="{Binding NomeCodigoCliente}" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+                            <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Cnpj.Value, Mode=TwoWay}" IsEnabled="{Binding PodeEditarDadosCliente}" Keyboard="Numeric" Style="{StaticResource EntryStyle}">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateCnpjCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger TargetType="Entry" Binding="{Binding Cnpj.IsValid}" Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <Label Grid.Row="2" Grid.Column="1" Text="{Binding Cnpj.Errors, Converter={StaticResource FirstValidationErrorConverter}" Style="{StaticResource ValidationErrorLabelStyle}" />
+
+                            <Label Grid.Row="3" Text="Razão Social" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+                            <Entry Grid.Row="3" Grid.Column="1" Text="{Binding RazaoSocial.Value, Mode=TwoWay}" IsEnabled="False" Style="{StaticResource EntryStyle}" />
+
+                            <Label Grid.Row="4" Text="Nome Fantasia" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+                            <Entry Grid.Row="4" Grid.Column="1" Text="{Binding NomeFantasia.Value, Mode=TwoWay}" IsEnabled="False" Style="{StaticResource EntryStyle}" />
+                        </Grid>
+                    </Frame>
+
+                    <Frame HasShadow="False" BackgroundColor="White" IsVisible="{Binding ClienteSelecionado}">
+                        <StackLayout>
+                            <Label Text="Adicionar Produto" FontSize="Medium" FontAttributes="Bold"/>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Fill">
+                                
+                                <xfx:XfxComboBox Placeholder="Código do Produto"
+                                             ActivePlaceholderColor="{StaticResource LightBlueColor}"
+                                             SelectedItem="{Binding SelectedProductCode}"
+                                             Text="{Binding ProductCode}"
+                                             ItemsSource="{Binding ProductsSuggestions}"
+                                             SortingAlgorithm="{Binding SortingAlgorithm}" Style="{StaticResource EntryStyle333}" />
+
+                                <Image Source="ic_add_shopping_cart_black_24dp.png" VerticalOptions="Center">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding AddOrderItemCommand}" NumberOfTapsRequired="1" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </StackLayout>
+                            
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame HasShadow="False" BackgroundColor="White">
+                        <StackLayout>
+                            <Label Text="Produtos adicionados" FontSize="Medium" FontAttributes="Bold"/>
+
+                            <Grid Grid.Row="3" Padding="0" ColumnSpacing="0" RowSpacing="0" VerticalOptions="Fill">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Código" HorizontalOptions="Center" />
+                                <Label Text="Quantidade" Grid.Column="1" HorizontalOptions="Center"/>
+                                <Label Text="Valor (R$)" Grid.Column="2" HorizontalOptions="Center"/>
+                            </Grid>
+                            <ListView ItemsSource="{Binding ItensPedidos}" x:Name="listViewPosicoes"
+                              IsVisible="{Binding ItensPedidos.Count, Converter={StaticResource CountToBoolConverter}}" 
+                              HasUnevenRows="True" 
+                              SeparatorVisibility="None" 
+                              CachingStrategy="RecycleElement" 
+                              Margin="5,0">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <ViewCell.ContextActions>
+                                                <MenuItem Text="Editar" Command="{Binding Path=BindingContext.EditItemCommand, Source={x:Reference Name=listViewPosicoes}}" CommandParameter="{Binding .}" IsDestructive="False" />
+                                                <MenuItem Text="Excluir" Command="{Binding Path=BindingContext.RemoveItemCommand, Source={x:Reference Name=listViewPosicoes}}" CommandParameter="{Binding .}" IsDestructive="True" />
+                                            </ViewCell.ContextActions>
+                                            <Grid Padding="0" ColumnSpacing="0" RowSpacing="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <Label Text="{Binding ProductCode}" HorizontalOptions="Center" />
+                                                <Label Text="{Binding Quantidade}" Grid.Column="1" HorizontalOptions="Center" />
+                                                <Label Text="{Binding Valor, StringFormat='{0:F}'}" Grid.Column="2" HorizontalOptions="Center" />
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </ScrollView>
+
+            <Grid BackgroundColor="{StaticResource LightGreenColor}" Grid.Row="3" Padding="0" ColumnSpacing="0" RowSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label Text="Total" FontAttributes="Bold" HorizontalOptions="Center" FontSize="Medium" />
+                <Label Text="{Binding TotalItens}" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="Center" FontSize="Medium"/>
+                <Label Text="{Binding ValorTotal, StringFormat='{0:F}'}" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="Center" FontSize="Medium"/>
+            </Grid>
+
+            <Button Grid.Row="4" Text="FINALIZAR" Command="{Binding PaymentCommand}" Margin="10,3,10,10" />
+
+            <ActivityIndicator  Grid.RowSpan="5"
+                                Color="{StaticResource LightBlueColor}" 
+                                IsRunning="{Binding IsBusy}"
+                                IsVisible="{Binding IsBusy}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double" iOS="100" Android="100" WinPhone="400" />
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

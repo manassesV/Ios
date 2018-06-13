@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="ListarClientes">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DataUltAlteracao" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarClientesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListarClientesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarProdutos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DataUltAlteracao" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarProdutosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListarProdutosResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarVendedores">
+        <s:complexType />
+      </s:element>
+      <s:element name="ListarVendedoresResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListarVendedoresResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarGrupos">
+        <s:complexType />
+      </s:element>
+      <s:element name="ListarGruposResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListarGruposResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarDetalhes">
+        <s:complexType />
+      </s:element>
+      <s:element name="ListarDetalhesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListarDetalhesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnviarPedido">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="json" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnviarPedidoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EnviarPedidoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarSaldo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Referencia" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarSaldoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultarSaldoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnviarCliente">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="json" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnviarClienteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EnviarClienteResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarUltimaCompra">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Cnpj" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarUltimaCompraResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultarUltimaCompraResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ListarClientesSoapIn">
+    <wsdl:part name="parameters" element="tns:ListarClientes" />
+  </wsdl:message>
+  <wsdl:message name="ListarClientesSoapOut">
+    <wsdl:part name="parameters" element="tns:ListarClientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListarProdutosSoapIn">
+    <wsdl:part name="parameters" element="tns:ListarProdutos" />
+  </wsdl:message>
+  <wsdl:message name="ListarProdutosSoapOut">
+    <wsdl:part name="parameters" element="tns:ListarProdutosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListarVendedoresSoapIn">
+    <wsdl:part name="parameters" element="tns:ListarVendedores" />
+  </wsdl:message>
+  <wsdl:message name="ListarVendedoresSoapOut">
+    <wsdl:part name="parameters" element="tns:ListarVendedoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListarGruposSoapIn">
+    <wsdl:part name="parameters" element="tns:ListarGrupos" />
+  </wsdl:message>
+  <wsdl:message name="ListarGruposSoapOut">
+    <wsdl:part name="parameters" element="tns:ListarGruposResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListarDetalhesSoapIn">
+    <wsdl:part name="parameters" element="tns:ListarDetalhes" />
+  </wsdl:message>
+  <wsdl:message name="ListarDetalhesSoapOut">
+    <wsdl:part name="parameters" element="tns:ListarDetalhesResponse" />
+  </wsdl:message>
+  <wsdl:message name="EnviarPedidoSoapIn">
+    <wsdl:part name="parameters" element="tns:EnviarPedido" />
+  </wsdl:message>
+  <wsdl:message name="EnviarPedidoSoapOut">
+    <wsdl:part name="parameters" element="tns:EnviarPedidoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarSaldoSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultarSaldo" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarSaldoSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultarSaldoResponse" />
+  </wsdl:message>
+  <wsdl:message name="EnviarClienteSoapIn">
+    <wsdl:part name="parameters" element="tns:EnviarCliente" />
+  </wsdl:message>
+  <wsdl:message name="EnviarClienteSoapOut">
+    <wsdl:part name="parameters" element="tns:EnviarClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarUltimaCompraSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultarUltimaCompra" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarUltimaCompraSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultarUltimaCompraResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListarClientesHttpGetIn">
+    <wsdl:part name="DataUltAlteracao" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ListarClientesHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ListarProdutosHttpGetIn">
+    <wsdl:part name="DataUltAlteracao" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ListarProdutosHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ListarVendedoresHttpGetIn" />
+  <wsdl:message name="ListarVendedoresHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ListarGruposHttpGetIn" />
+  <wsdl:message name="ListarGruposHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ListarDetalhesHttpGetIn" />
+  <wsdl:message name="ListarDetalhesHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="EnviarPedidoHttpGetIn">
+    <wsdl:part name="json" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="EnviarPedidoHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarSaldoHttpGetIn">
+    <wsdl:part name="Referencia" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarSaldoHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="EnviarClienteHttpGetIn">
+    <wsdl:part name="json" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="EnviarClienteHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarUltimaCompraHttpGetIn">
+    <wsdl:part name="Cnpj" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarUltimaCompraHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ListarClientesHttpPostIn">
+    <wsdl:part name="DataUltAlteracao" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ListarClientesHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ListarProdutosHttpPostIn">
+    <wsdl:part name="DataUltAlteracao" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ListarProdutosHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ListarVendedoresHttpPostIn" />
+  <wsdl:message name="ListarVendedoresHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ListarGruposHttpPostIn" />
+  <wsdl:message name="ListarGruposHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ListarDetalhesHttpPostIn" />
+  <wsdl:message name="ListarDetalhesHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="EnviarPedidoHttpPostIn">
+    <wsdl:part name="json" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="EnviarPedidoHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarSaldoHttpPostIn">
+    <wsdl:part name="Referencia" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarSaldoHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="EnviarClienteHttpPostIn">
+    <wsdl:part name="json" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="EnviarClienteHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarUltimaCompraHttpPostIn">
+    <wsdl:part name="Cnpj" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarUltimaCompraHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="wsConsertSoap">
+    <wsdl:operation name="ListarClientes">
+      <wsdl:input message="tns:ListarClientesSoapIn" />
+      <wsdl:output message="tns:ListarClientesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarProdutos">
+      <wsdl:input message="tns:ListarProdutosSoapIn" />
+      <wsdl:output message="tns:ListarProdutosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarVendedores">
+      <wsdl:input message="tns:ListarVendedoresSoapIn" />
+      <wsdl:output message="tns:ListarVendedoresSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarGrupos">
+      <wsdl:input message="tns:ListarGruposSoapIn" />
+      <wsdl:output message="tns:ListarGruposSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarDetalhes">
+      <wsdl:input message="tns:ListarDetalhesSoapIn" />
+      <wsdl:output message="tns:ListarDetalhesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviarPedido">
+      <wsdl:input message="tns:EnviarPedidoSoapIn" />
+      <wsdl:output message="tns:EnviarPedidoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSaldo">
+      <wsdl:input message="tns:ConsultarSaldoSoapIn" />
+      <wsdl:output message="tns:ConsultarSaldoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCliente">
+      <wsdl:input message="tns:EnviarClienteSoapIn" />
+      <wsdl:output message="tns:EnviarClienteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarUltimaCompra">
+      <wsdl:input message="tns:ConsultarUltimaCompraSoapIn" />
+      <wsdl:output message="tns:ConsultarUltimaCompraSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="wsConsertHttpGet">
+    <wsdl:operation name="ListarClientes">
+      <wsdl:input message="tns:ListarClientesHttpGetIn" />
+      <wsdl:output message="tns:ListarClientesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarProdutos">
+      <wsdl:input message="tns:ListarProdutosHttpGetIn" />
+      <wsdl:output message="tns:ListarProdutosHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarVendedores">
+      <wsdl:input message="tns:ListarVendedoresHttpGetIn" />
+      <wsdl:output message="tns:ListarVendedoresHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarGrupos">
+      <wsdl:input message="tns:ListarGruposHttpGetIn" />
+      <wsdl:output message="tns:ListarGruposHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarDetalhes">
+      <wsdl:input message="tns:ListarDetalhesHttpGetIn" />
+      <wsdl:output message="tns:ListarDetalhesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviarPedido">
+      <wsdl:input message="tns:EnviarPedidoHttpGetIn" />
+      <wsdl:output message="tns:EnviarPedidoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSaldo">
+      <wsdl:input message="tns:ConsultarSaldoHttpGetIn" />
+      <wsdl:output message="tns:ConsultarSaldoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCliente">
+      <wsdl:input message="tns:EnviarClienteHttpGetIn" />
+      <wsdl:output message="tns:EnviarClienteHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarUltimaCompra">
+      <wsdl:input message="tns:ConsultarUltimaCompraHttpGetIn" />
+      <wsdl:output message="tns:ConsultarUltimaCompraHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="wsConsertHttpPost">
+    <wsdl:operation name="ListarClientes">
+      <wsdl:input message="tns:ListarClientesHttpPostIn" />
+      <wsdl:output message="tns:ListarClientesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarProdutos">
+      <wsdl:input message="tns:ListarProdutosHttpPostIn" />
+      <wsdl:output message="tns:ListarProdutosHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarVendedores">
+      <wsdl:input message="tns:ListarVendedoresHttpPostIn" />
+      <wsdl:output message="tns:ListarVendedoresHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarGrupos">
+      <wsdl:input message="tns:ListarGruposHttpPostIn" />
+      <wsdl:output message="tns:ListarGruposHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarDetalhes">
+      <wsdl:input message="tns:ListarDetalhesHttpPostIn" />
+      <wsdl:output message="tns:ListarDetalhesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviarPedido">
+      <wsdl:input message="tns:EnviarPedidoHttpPostIn" />
+      <wsdl:output message="tns:EnviarPedidoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSaldo">
+      <wsdl:input message="tns:ConsultarSaldoHttpPostIn" />
+      <wsdl:output message="tns:ConsultarSaldoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCliente">
+      <wsdl:input message="tns:EnviarClienteHttpPostIn" />
+      <wsdl:output message="tns:EnviarClienteHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarUltimaCompra">
+      <wsdl:input message="tns:ConsultarUltimaCompraHttpPostIn" />
+      <wsdl:output message="tns:ConsultarUltimaCompraHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="wsConsertSoap" type="tns:wsConsertSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ListarClientes">
+      <soap:operation soapAction="http://tempuri.org/ListarClientes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarProdutos">
+      <soap:operation soapAction="http://tempuri.org/ListarProdutos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarVendedores">
+      <soap:operation soapAction="http://tempuri.org/ListarVendedores" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarGrupos">
+      <soap:operation soapAction="http://tempuri.org/ListarGrupos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarDetalhes">
+      <soap:operation soapAction="http://tempuri.org/ListarDetalhes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarPedido">
+      <soap:operation soapAction="http://tempuri.org/EnviarPedido" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSaldo">
+      <soap:operation soapAction="http://tempuri.org/ConsultarSaldo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCliente">
+      <soap:operation soapAction="http://tempuri.org/EnviarCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarUltimaCompra">
+      <soap:operation soapAction="http://tempuri.org/ConsultarUltimaCompra" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsConsertSoap12" type="tns:wsConsertSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ListarClientes">
+      <soap12:operation soapAction="http://tempuri.org/ListarClientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarProdutos">
+      <soap12:operation soapAction="http://tempuri.org/ListarProdutos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarVendedores">
+      <soap12:operation soapAction="http://tempuri.org/ListarVendedores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarGrupos">
+      <soap12:operation soapAction="http://tempuri.org/ListarGrupos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarDetalhes">
+      <soap12:operation soapAction="http://tempuri.org/ListarDetalhes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarPedido">
+      <soap12:operation soapAction="http://tempuri.org/EnviarPedido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSaldo">
+      <soap12:operation soapAction="http://tempuri.org/ConsultarSaldo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCliente">
+      <soap12:operation soapAction="http://tempuri.org/EnviarCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarUltimaCompra">
+      <soap12:operation soapAction="http://tempuri.org/ConsultarUltimaCompra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsConsertHttpGet" type="tns:wsConsertHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="ListarClientes">
+      <http:operation location="/ListarClientes" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarProdutos">
+      <http:operation location="/ListarProdutos" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarVendedores">
+      <http:operation location="/ListarVendedores" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarGrupos">
+      <http:operation location="/ListarGrupos" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarDetalhes">
+      <http:operation location="/ListarDetalhes" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarPedido">
+      <http:operation location="/EnviarPedido" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSaldo">
+      <http:operation location="/ConsultarSaldo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCliente">
+      <http:operation location="/EnviarCliente" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarUltimaCompra">
+      <http:operation location="/ConsultarUltimaCompra" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsConsertHttpPost" type="tns:wsConsertHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="ListarClientes">
+      <http:operation location="/ListarClientes" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarProdutos">
+      <http:operation location="/ListarProdutos" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarVendedores">
+      <http:operation location="/ListarVendedores" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarGrupos">
+      <http:operation location="/ListarGrupos" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarDetalhes">
+      <http:operation location="/ListarDetalhes" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarPedido">
+      <http:operation location="/EnviarPedido" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSaldo">
+      <http:operation location="/ConsultarSaldo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCliente">
+      <http:operation location="/EnviarCliente" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarUltimaCompra">
+      <http:operation location="/ConsultarUltimaCompra" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="wsConsert">
+    <wsdl:port name="wsConsertSoap" binding="tns:wsConsertSoap">
+      <soap:address location="http://201.55.169.17/wsconsert/wsconsert.asmx" />
+    </wsdl:port>
+    <wsdl:port name="wsConsertSoap12" binding="tns:wsConsertSoap12">
+      <soap12:address location="http://201.55.169.17/wsconsert/wsconsert.asmx" />
+    </wsdl:port>
+    <wsdl:port name="wsConsertHttpGet" binding="tns:wsConsertHttpGet">
+      <http:address location="http://201.55.169.17/wsconsert/wsconsert.asmx" />
+    </wsdl:port>
+    <wsdl:port name="wsConsertHttpPost" binding="tns:wsConsertHttpPost">
+      <http:address location="http://201.55.169.17/wsconsert/wsconsert.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

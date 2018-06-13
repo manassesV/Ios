@@ -1,0 +1,21 @@
+﻿{
+  "dependencies": {
+    "Acr.UserDialogs": "6.3.8",
+    "Autofac": "4.5.0",
+    "CarouselView.FormsPlugin": "5.2.0",
+    "Newtonsoft.Json": "10.0.3",
+    "PCLCrypto": "2.0.147",
+    "Realm": "1.5.0",
+    "SlideOverKit": "2.1.4",
+    "Xam.Plugin.Connectivity": "3.0.3",
+    "Xam.Plugins.Settings": "3.1.1",
+    "Xamarin.FFImageLoading.Forms": "2.2.25",
+    "Xamarin.Forms": "2.5.0.121934",
+    "Xamarin.Forms.CarouselView": "2.3.0-pre2",
+    "Xamarin.Forms.DataGrid": "1.9.6"
+  },
+  "frameworks": {
+    ".NETPortable,Version=v4.5,Profile=Profile111": {}
+  },
+  "supports": {}
+}

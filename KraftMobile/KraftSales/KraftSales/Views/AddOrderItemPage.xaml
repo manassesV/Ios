@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KraftSales.Views.AddOrderItemPage"
+             xmlns:views="clr-namespace:KraftSales.Views;assembly=KraftSales"
+             xmlns:converters="clr-namespace:KraftSales.Converters;assembly=KraftSales"
+             xmlns:triggers="clr-namespace:KraftSales.Triggers;assembly=KraftSales"
+             xmlns:behaviors="clr-namespace:KraftSales.Behaviors;assembly=KraftSales"
+			 xmlns:viewModelBase="clr-namespace:KraftSales.ViewModels.Base;assembly=KraftSales"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+			 viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+             >
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String" iOS="DKP Fair" WinPhone="Kraft Fair" />
+    </ContentPage.Title>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid Padding="0" ColumnSpacing="0" RowSpacing="0" BackgroundColor="{StaticResource BackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="24, 5">
+                <Label Text="[" TextColor="{StaticResource LightBlueColor}"/>
+                <Label Text="PEDIDO DE VENDA" FontAttributes="Bold"/>
+                <Label Text="]" TextColor="{StaticResource LightBlueColor}"/>
+            </StackLayout>
+
+            <Grid Grid.Row="1" Margin="10,0" RowSpacing="0" ColumnSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ffimageloading:CachedImage Grid.Column="0" Aspect="AspectFit" Source="{Binding ProductUrl}" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="60">
+                    <ffimageloading:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenImageCommand}" />
+                    </ffimageloading:CachedImage.GestureRecognizers>
+                </ffimageloading:CachedImage>
+
+                <StackLayout Grid.Column="1" VerticalOptions="Center" Margin="5,0,0,0">
+                    <Label Text="{Binding CodigoProduto}" />
+                    <Label Text="{Binding Descricao}" />
+                    <Grid RowSpacing="0" ColumnSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Preco, StringFormat='R$ {0}'}" />
+                        <!--<Label Grid.Column="1" Text="{Binding SaldoDisponivel, StringFormat='Saldo: {0} peça(s)'}" IsVisible="{Binding ExibeSaldo}" />-->
+                    </Grid>
+                </StackLayout>
+            </Grid>
+
+            <Grid Grid.Row="2" Margin="10,0,10,0" RowSpacing="0" ColumnSpacing="0" HorizontalOptions="Fill">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Text="Tipo" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+                <Picker Grid.Column="1" ItemsSource="{Binding TiposItem}" VerticalOptions="Fill" SelectedItem="{Binding TipoItem, Mode=TwoWay}" />
+
+                <Label Grid.Column="2" Text="Qtde" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+                <Entry Grid.Column="3" Text="{Binding Quantidade}" Keyboard="Numeric" >
+                </Entry>
+
+                <Label Grid.Column="4" Text="Total: " Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+                <Label Grid.Column="5" Text="{Binding QuantidadeTotalItens}" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+
+            </Grid>
+
+            <ScrollView Grid.Row="3" Margin="0,5">
+
+                <dg:DataGrid x:Name="gridPack" Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding ItensPackMinimo}" SelectionEnabled="False" MinimumHeightRequest="100"
+                                 RowHeight="30" HeaderHeight="30" BorderColor="#CCCCCC" HeaderBackground="#E0E6F8" HeaderFontSize="13">
+                    <x:Arguments>
+                        <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+                    </x:Arguments>
+                    <dg:DataGrid.Columns>
+                        <dg:DataGridColumn Title="Cor" PropertyName="Cor" Width="2*" SortingEnabled="True" />
+                        <dg:DataGridColumn Title="Tamanho" PropertyName="Tamanho" Width="1*"/>
+                        <dg:DataGridColumn Title="Quantidade" PropertyName="Quantidade"  Width="1*"/>
+                    </dg:DataGrid.Columns>
+                    <dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:PaletteCollection>
+                            <Color>#F2F2F2</Color>
+                            <Color>#FFFFFF</Color>
+                        </dg:PaletteCollection>
+                    </dg:DataGrid.RowsBackgroundColorPalette>
+                </dg:DataGrid>
+
+
+            </ScrollView>
+
+            <StackLayout Grid.Row="4" Margin="10,0">
+                <Label Text="{Binding QuantidadePackMinimo, StringFormat='Total no Pack: {0} unidades'}" FontAttributes="Bold" />
+            </StackLayout>
+
+            <Button Grid.Row="5" Text="ADICIONAR" Command="{Binding AddItemCommand}" Margin="10" />
+
+            <ActivityIndicator  Grid.RowSpan="6"
+                                Color="{StaticResource LightBlueColor}" 
+                                IsRunning="{Binding IsBusy}"
+                                IsVisible="{Binding IsBusy}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double" iOS="100" Android="100" WinPhone="400" />
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

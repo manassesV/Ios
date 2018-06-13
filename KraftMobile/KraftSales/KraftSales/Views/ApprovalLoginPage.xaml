@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KraftSales.Views.ApprovalLoginPage"
+		 	 xmlns:viewModelBase="clr-namespace:KraftSales.ViewModels.Base;assembly=KraftSales"
+             xmlns:animations="clr-namespace:KraftSales.Animations;assembly=KraftSales"
+             xmlns:converters="clr-namespace:KraftSales.Converters;assembly=KraftSales"
+             xmlns:triggers="clr-namespace:KraftSales.Triggers;assembly=KraftSales"
+             xmlns:behaviors="clr-namespace:KraftSales.Behaviors;assembly=KraftSales"
+			 viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String" iOS="DKP Fair" WinPhone="Kraft Fair"/>
+    </ContentPage.Title>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+            <animations:StoryBoard x:Key="LoginAnimation" Target="{x:Reference LoginPanel}">
+                <animations:FadeInAnimation Direction="Up" Duration="1500" />
+            </animations:StoryBoard>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Triggers>
+        <EventTrigger Event="Appearing">
+            <triggers:BeginAnimation Animation="{StaticResource LoginAnimation}" />
+        </EventTrigger>
+    </ContentPage.Triggers>
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource BackgroundColor}">
+            <!-- MOCK AUTH -->
+            <Grid x:Name="LoginPanel" Padding="0" ColumnSpacing="0" RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <!-- LOGIN / SETTINGS -->
+                <Grid Grid.Row="0" Margin="48, 24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <!--<ColumnDefinition />-->
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Center">
+                        <Label Text="[" TextColor="{StaticResource LightBlueColor}"/>
+                        <Label Text="LOGIN APROVADOR" FontAttributes="Bold"/>
+                        <Label Text="]" TextColor="{StaticResource LightBlueColor}"/>
+                    </StackLayout>
+                </Grid>
+                <!-- INFO -->
+                <!--<Grid BackgroundColor="{StaticResource LightGreenColor}" Grid.Row="1" Padding="0" ColumnSpacing="0" RowSpacing="0">
+                    <Label Text="[ ENVIAR PARA FILA APROVAÇÃO ]" Style="{StaticResource LabelButtonStyle}"/>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding EnviarFilaAprovacaoCommand}" NumberOfTapsRequired="1" />
+                    </Grid.GestureRecognizers>
+                </Grid>-->
+
+                <Grid BackgroundColor="Yellow" Grid.Row="1" Padding="0" ColumnSpacing="0" RowSpacing="0">
+                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text=" NECESSÁRIO APROVAÇÃO " FontAttributes="Bold"/>
+                    </StackLayout>
+                </Grid>
+
+                <!--<Button Grid.Row="1" Text="ENVIAR PARA FILA APROVAÇÃO" Command="{Binding EnviarFilaAprovacaoCommand}" Margin="10,0" BackgroundColor="Red"/>-->
+
+
+                <!-- LOGIN FORM -->
+                <ScrollView Grid.Row="2">
+                    <StackLayout Margin="24">
+                        <Label Text="Usuário" Style="{StaticResource HeaderLabelStyle}" />
+                        <Entry Text="{Binding UserName.Value, Mode=TwoWay}">
+                            <Entry.Style>
+                                <OnPlatform x:TypeArguments="Style" 
+                                          iOS="{StaticResource EntryStyle}"
+                                          Android="{StaticResource EntryStyle}"
+                                          WinPhone="{StaticResource UwpEntryStyle}"/>
+                            </Entry.Style>
+                            <Entry.Behaviors>
+                                <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateUserNameCommand}" />
+                            </Entry.Behaviors>
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry" Binding="{Binding UserName.IsValid}" Value="False">
+                                    <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <Label Text="{Binding UserName.Errors, Converter={StaticResource FirstValidationErrorConverter}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                        <Label Text="Senha" Style="{StaticResource HeaderLabelStyle}"/>
+                        <Entry IsPassword="True" Text="{Binding Password.Value, Mode=TwoWay}">
+                            <Entry.Style>
+                                <OnPlatform x:TypeArguments="Style"
+                                          iOS="{StaticResource EntryStyle}"
+                                          Android="{StaticResource EntryStyle}"
+                                          WinPhone="{StaticResource UwpEntryStyle}"/>
+                            </Entry.Style>
+                            <Entry.Behaviors>
+                                <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidatePasswordCommand}" />
+                            </Entry.Behaviors>
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry" Binding="{Binding Password.IsValid}" Value="False">
+                                    <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <Label Text="{Binding Password.Errors, Converter={StaticResource FirstValidationErrorConverter}" Style="{StaticResource ValidationErrorLabelStyle}" />
+
+                        <Button Text="LOGIN" Command="{Binding MockSignInCommand}" Margin="0,24,0,0" />
+
+                    </StackLayout>
+                </ScrollView>
+                <!-- LOGIN BUTTON -->
+                <!--<Grid BackgroundColor="{StaticResource LightBlueColor}" Grid.Row="3" Padding="0" ColumnSpacing="0" RowSpacing="0">
+                    <Label Text="[ LOGIN ]" Style="{StaticResource LabelButtonStyle}"/>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MockSignInCommand}" NumberOfTapsRequired="1" />
+                    </Grid.GestureRecognizers>
+                </Grid>-->
+            </Grid>
+            <ActivityIndicator  Color="{StaticResource LightBlueColor}" 
+                                IsRunning="{Binding IsBusy}"
+                                IsVisible="{Binding IsBusy}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double" iOS="100" Android="100" WinPhone="400" />
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

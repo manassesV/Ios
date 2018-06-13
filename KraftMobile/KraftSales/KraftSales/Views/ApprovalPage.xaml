@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KraftSales.Views.ApprovalPage"
+             xmlns:views="clr-namespace:KraftSales.Views;assembly=KraftSales"
+             xmlns:converters="clr-namespace:KraftSales.Converters;assembly=KraftSales"
+             xmlns:triggers="clr-namespace:KraftSales.Triggers;assembly=KraftSales"
+             xmlns:behaviors="clr-namespace:KraftSales.Behaviors;assembly=KraftSales"
+			 xmlns:viewModelBase="clr-namespace:KraftSales.ViewModels.Base;assembly=KraftSales"
+			 viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String" iOS="DKP Fair" WinPhone="Kraft Fair" />
+    </ContentPage.Title>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid Padding="0" ColumnSpacing="0" RowSpacing="0" BackgroundColor="{StaticResource BackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="48,24,48,10">
+                <Label Text="[" TextColor="{StaticResource LightBlueColor}"/>
+                <Label Text="APROVAÇÃO DE PEDIDO" FontAttributes="Bold"/>
+                <Label Text="]" TextColor="{StaticResource LightBlueColor}"/>
+            </StackLayout>
+
+            <ScrollView Grid.Row="1">
+                <StackLayout >
+
+                    <Grid Margin="24,0,24,0" RowSpacing="0" ColumnSpacing="0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Text="Desconto(%)" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center"/>
+                        <Entry Grid.Column="1" Text="{Binding Desconto, Mode=TwoWay}" Keyboard="Numeric" Style="{StaticResource EntryStyle}">
+                            <Entry.Behaviors>
+                                <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateDescontoCommand}" />
+                            </Entry.Behaviors>
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry" Binding="{Binding Desconto.IsValid}" Value="False">
+                                    <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+
+                        <Label Grid.Row="1" Text="Pagamento" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+                        <Picker Title="Tipo de Pagamento" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding TiposPagamento}" VerticalOptions="Fill" SelectedItem="{Binding TipoPagamento, Mode=TwoWay}" />
+
+                        <Label Grid.Row="2" Text="Representante" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+                        <Picker Title="Representante" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Representantes}" VerticalOptions="Fill" SelectedItem="{Binding Representante, Mode=TwoWay}" />
+
+                        <Label Grid.Row="3" Text="Data Entrega" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+                        <DatePicker Grid.Row="3" Grid.Column="1" VerticalOptions="Fill" Date="{Binding DataEntrega}" MinimumDate="{Binding DataEntregaMinima}" MaximumDate="{Binding DataEntregaMaxima}"  >
+                            <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+                        </DatePicker>
+
+                        <Label Grid.Row="4" Text="Frete" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" />
+                        <Picker Title="Tipo de Frete" Grid.Row="4" Grid.Column="1" ItemsSource="{Binding TiposFrete}" SelectedItem="{Binding TipoFrete, Mode=TwoWay}" VerticalOptions="Fill"  />
+
+                        <Label Grid.Row="5" Text="Transportadora" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center" IsVisible="{Binding ExibeTransporte}"/>
+                        <Entry Grid.Row="5" Grid.Column="1" Text="{Binding Transporte.Value, Mode=TwoWay}" IsVisible="{Binding ExibeTransporte}" Style="{StaticResource EntryStyle}" >
+                            <Entry.Keyboard>
+                                <Keyboard x:FactoryMethod="Create">
+                                    <x:Arguments>
+                                        <KeyboardFlags>CapitalizeSentence</KeyboardFlags>
+                                    </x:Arguments>
+                                </Keyboard>
+                            </Entry.Keyboard>
+                            <Entry.Behaviors>
+                                <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateTransporteCommand}" />
+                            </Entry.Behaviors>
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry" Binding="{Binding Transporte.IsValid}" Value="False">
+                                    <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+
+                        <Label Grid.Row="6" Text="Observação" Style="{StaticResource HeaderLabelStyle}" VerticalOptions="Center"/>
+                        <Editor Grid.Row="6" Grid.Column="1" Text="{Binding Observacao.Value, Mode=TwoWay}" HeightRequest="90" >
+                            <Editor.Keyboard>
+                                <Keyboard x:FactoryMethod="Create">
+                                    <x:Arguments>
+                                        <KeyboardFlags>CapitalizeSentence</KeyboardFlags>
+                                    </x:Arguments>
+                                </Keyboard>
+                            </Editor.Keyboard>
+                            <Entry.Behaviors>
+                                <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateObservacaoCommand}" />
+                            </Entry.Behaviors>
+                        </Editor>
+
+                    </Grid>
+
+                    <Grid BackgroundColor="{StaticResource LightGreenColor}" Grid.Row="3" Padding="0" ColumnSpacing="0" RowSpacing="0" Margin="24,10,24,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label Text="Total" FontAttributes="Bold" HorizontalOptions="Center" FontSize="Medium" />
+                        <Label Text="{Binding TotalItens, StringFormat='{0} itens'}" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="Center" FontSize="Medium"/>
+                        <Label Text="{Binding ValorTotal, StringFormat='{0:F}'}" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="Center" FontSize="Medium"/>
+                        <Label Text="Total com desconto" FontAttributes="Bold" HorizontalOptions="Center" FontSize="Medium" Grid.Row="1" Grid.ColumnSpan="2"/>
+                        <Label Text="{Binding ValorTotalComDesconto, StringFormat='{0:F}'}" FontAttributes="Bold" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" FontSize="Medium"/>
+
+                    </Grid>
+
+                    <Grid Grid.Row="1" Padding="0" ColumnSpacing="0" RowSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Código" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <Label Text="Quantidade" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="Center"/>
+                        <Label Text="Valor (R$)" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="Center"/>
+                    </Grid>
+
+                    <ListView Grid.Row="2" ItemsSource="{Binding ItensPedidos}"
+                              IsVisible="{Binding ItensPedidos.Count, Converter={StaticResource CountToBoolConverter}}" 
+                              HasUnevenRows="True" 
+                              SeparatorVisibility="None" 
+                              CachingStrategy="RecycleElement" 
+                              Margin="5,0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="0" ColumnSpacing="0" RowSpacing="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding CodigoProduto}" HorizontalOptions="Center" />
+                                        <Label Text="{Binding Quantidade}" Grid.Column="1" HorizontalOptions="Center"/>
+                                        <Label Text="{Binding Valor, StringFormat='{0:F}'}" Grid.Column="2" HorizontalOptions="Center"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </StackLayout>
+            </ScrollView>
+
+            <Grid Grid.Row="2" Padding="0" ColumnSpacing="0" RowSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button Text="REJEITAR" BackgroundColor="Red" Command="{Binding RejectCommand}" Margin="10"/>
+                <Button Text="APROVAR" BackgroundColor="{StaticResource LightGreenColor}" Command="{Binding ApproveCommand}" Grid.Column="1" Margin="0,10,10,10"/>
+
+                <!--<Grid BackgroundColor="Red" Grid.Column="0" Padding="0" ColumnSpacing="0" RowSpacing="0">
+                    <Label Text="[ REJEITAR ]" Style="{StaticResource LabelButtonStyle}"/>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RejectCommand}" NumberOfTapsRequired="1" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+                
+                <Grid BackgroundColor="{StaticResource LightGreenColor}" Grid.Column="1" Padding="0" ColumnSpacing="0" RowSpacing="0">
+                    <Label Text="[ APROVAR ]" Style="{StaticResource LabelButtonStyle}"/>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ApproveCommand}" NumberOfTapsRequired="1" />
+                    </Grid.GestureRecognizers>
+                </Grid>-->
+            </Grid>
+            <ActivityIndicator  Grid.RowSpan="3"
+                                Color="{StaticResource LightBlueColor}" 
+                                IsRunning="{Binding IsBusy}"
+                                IsVisible="{Binding IsBusy}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double" iOS="100" Android="100" WinPhone="400" />
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>
