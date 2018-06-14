@@ -78,10 +78,10 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
-    <BuildIpa>True</BuildIpa>
+    <BuildIpa>true</BuildIpa>
     <CodesignProvision>
     </CodesignProvision>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution</CodesignKey>
     <CodesignEntitlements>
     </CodesignEntitlements>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
@@ -90,6 +90,9 @@
     <CodesignExtraArgs />
     <CodesignResourceRules />
     <OptimizePNGs>false</OptimizePNGs>
+    <IpaMetadata>Entitlements.plist</IpaMetadata>
+    <IpaIncludeArtwork>true</IpaIncludeArtwork>
+    <IpaPackageName>Teste</IpaPackageName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>none</DebugType>
